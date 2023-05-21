@@ -21,22 +21,22 @@ resource "aws_security_group" "rds" {
 
   }
 
-#   ingress {
-#     description     = "ssh from VPC"
-#     from_port       = 3306
-#     to_port         = 3306
-#     protocol        = "tcp"
-#     security_groups = ["${aws_security_group.bastion.id}"]
+  ingress {
+    description     = "ssh from VPC"
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = ["${aws_security_group.bastion.id}"]
 
-#   }
-#   ingress {
-#     description     = "http from VPC"
-#     from_port       = 3306
-#     to_port         = 3306
-#     protocol        = "tcp"
-#     security_groups = ["${aws_security_group.jenkins-sg.id}"]
+  }
+  ingress {
+    description     = "http from VPC"
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = ["${aws_security_group.jenkins-sg.id}"]
 
-#   }
+  }
 
   egress {
     from_port        = 0

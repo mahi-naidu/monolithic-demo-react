@@ -7,5 +7,5 @@ azs         = ["us-east-1a", "us-east-1b", "us-east-1c"]
 region = "us-east-1"
 profile = "test"
 
-ami         = "ami-053b0d53c279acc90"
+ami         = "ami-0889a44b331db0194"
 type        = "t2.micro"

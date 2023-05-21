@@ -12,6 +12,38 @@ resource "aws_security_group" "backend-sg" {
     security_groups = ["${aws_security_group.frontend.id}"]
 
   }
+  ingress {
+    description     = "ssh from VPC"
+    from_port       = 22
+    to_port         = 22
+    protocol        = "tcp"
+    security_groups = ["${aws_security_group.jenkins-sg.id}"]
+
+  }
+  ingress {
+    description = "ssh from VPC"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+
+  }
+#   ingress {
+#     description     = "ssh from VPC"
+#     from_port       = 80
+#     to_port         = 80
+#     protocol        = "tcp"
+#     security_groups = ["${aws_security_group.frontend.id}"]
+
+#   }
+#   ingress {
+#     description     = "ssh from VPC"
+#     from_port       = 22
+#     to_port         = 22
+#     protocol        = "tcp"
+#     security_groups = ["${aws_security_group.jenkins-sg.id}"]
+
+#   }
 #   ingress {
 #     description     = "http from VPC"
 #     from_port       = 8080
@@ -50,8 +82,9 @@ resource "aws_instance" "backend" {
   instance_type          = var.type
   key_name               = aws_key_pair.demo.id
   vpc_security_group_ids = ["${aws_security_group.backend-sg.id}"]
-  subnet_id              = aws_subnet.privsubnets[1].id
+  subnet_id              = aws_subnet.pubsubnets[0].id
 #   user_data              = data.template_file.userdata1.rendered
+  user_data = "${file("backend.sh")}"
 
   tags = {
     Name = "${var.envname}-backend"
